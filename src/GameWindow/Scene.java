@@ -1,9 +1,11 @@
 package GameWindow;
 
+import Cards.Card;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.awt.GLJPanel;
 
 import javax.swing.*;
@@ -12,12 +14,12 @@ import java.awt.*;
 public class Scene implements GLEventListener{
     private final GLProfile profile;
     private final GLCapabilities capabilities;
-    private final JFrame ogFrame;
-    private final JLayeredPane backFrame;
+    public final JFrame ogFrame;
+    public  JLayeredPane backFrame;
     private int width;
     private int height;
 
-    //Default scene
+    //Default scene (*not updated from second constructor)
     public Scene() {
         //getting the capabilities object of GL2 profile
         profile = GLProfile.get(GLProfile.GL2);
@@ -46,21 +48,32 @@ public class Scene implements GLEventListener{
         profile = GLProfile.get(GLProfile.GL2);
         capabilities = new GLCapabilities(profile);
 
-        //creating frame
+        GLCanvas glCanvas = new GLCanvas(capabilities); //Block of 1 part of method 2
+        glCanvas.addGLEventListener(this);
+        glCanvas.setSize(width, height);
+
+        //creating frame (method 2)
         ogFrame = new JFrame (title);
-        ogFrame.setSize(width,height);
+        ogFrame.getContentPane().add(glCanvas);
+        ogFrame.setSize(ogFrame.getContentPane().getPreferredSize());
         ogFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ogFrame.setResizable(false); //Resizable is going to be false by default
-//        ogFrame.setExtendedState(JFrame.NORMAL); //To remove title
-//        ogFrame.setUndecorated(true); //To remove title
         ogFrame.setVisible(true);
 
+        //Method 1:
+//        ogFrame = new JFrame (title);
+//        ogFrame.setSize(width,height);
+//        ogFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        ogFrame.setResizable(false); //Resizable is going to be false by default
+////        ogFrame.setExtendedState(JFrame.NORMAL); //To remove title
+////        ogFrame.setUndecorated(true); //To remove title
+//        ogFrame.setVisible(true);
+
         //Creating the JLayeredPane
-        backFrame = new JLayeredPane(); //We may still have to it be the back layer only, when adding more components
-        backFrame.setSize(width,height);
-        backFrame.setLayout(null);
-        backFrame.setOpaque(true);
-        ogFrame.add(backFrame);
+//        backFrame = new JLayeredPane(); //We may still have to it be the back layer only, when adding more components
+//        backFrame.setSize(width,height);
+//        backFrame.setLayout(null);
+//        backFrame.setOpaque(true);
+//        ogFrame.add(backFrame);
 
         //Instance variables
         this.width = width;
@@ -87,6 +100,11 @@ public class Scene implements GLEventListener{
 //        imgFrame.setBounds(0,0,width,height);
 //        System.out.println("Width: " + width + ". Height: " + height);
         imgPanel.add(imgFrame);
+    }
+
+    //Adds card to scene
+    public void addCard(Card newCard) {
+
     }
 
     @Override

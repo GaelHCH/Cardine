@@ -1,9 +1,12 @@
 package Cards;
 
+import GameWindow.Scene;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
+
+import javax.swing.*;
 
 public class Card implements GLEventListener {
     /*
@@ -13,9 +16,17 @@ public class Card implements GLEventListener {
         * A default clickable sound
         * A draggable card (however not enabled by default)
      */
+    private JLayeredPane card;
+    private Scene scene;
+
 
     public Card() {
-
+        //Setting the current scene
+        //Default card creation
+        card = new JLayeredPane(); //We may still have to it be the back layer only, when adding more components
+        card.setSize(50,100);
+        card.setLayout(null);
+        card.setOpaque(true);
     }
 
     //This method creates the actual rectangle outline for the card
