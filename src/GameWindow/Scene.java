@@ -67,13 +67,13 @@ public class Scene implements GLEventListener{
 ////        ogFrame.setExtendedState(JFrame.NORMAL); //To remove title
 ////        ogFrame.setUndecorated(true); //To remove title
 //        ogFrame.setVisible(true);
-
-        //Creating the JLayeredPane
-//        backFrame = new JLayeredPane(); //We may still have to it be the back layer only, when adding more components
-//        backFrame.setSize(width,height);
-//        backFrame.setLayout(null);
-//        backFrame.setOpaque(true);
-//        ogFrame.add(backFrame);
+////
+////        //Creating the JLayeredPane
+        backFrame = new JLayeredPane(); //We may still have to it be the back layer only, when adding more components
+        backFrame.setSize(width,height);
+        backFrame.setLayout(null);
+        backFrame.setOpaque(false);
+        ogFrame.add(backFrame);
 
         //Instance variables
         this.width = width;
