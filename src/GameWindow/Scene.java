@@ -1,15 +1,17 @@
 package GameWindow;
 
 import Cards.Card;
-import com.jogamp.opengl.GLAutoDrawable;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLEventListener;
-import com.jogamp.opengl.GLProfile;
+import UI.ImageCreation;
+import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.awt.GLJPanel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Scene implements GLEventListener{
     private final GLProfile profile;
@@ -54,7 +56,7 @@ public class Scene implements GLEventListener{
 
         //creating frame (method 2)
         ogFrame = new JFrame (title);
-        ogFrame.getContentPane().add(glCanvas);
+        ogFrame.getContentPane().add(glCanvas); //used to have .getContentPane()
         ogFrame.setSize(ogFrame.getContentPane().getPreferredSize());
         ogFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ogFrame.setVisible(true);
@@ -69,18 +71,19 @@ public class Scene implements GLEventListener{
 //        ogFrame.setVisible(true);
 
         //Creating the JLayeredPane
-//        backFrame = new JLayeredPane(); //We may still have to it be the back layer only, when adding more components
-//        backFrame.setSize(width,height);
-//        backFrame.setLayout(null);
-//        backFrame.setOpaque(true);
-//        ogFrame.add(backFrame);
+        backFrame = new JLayeredPane(); //We may still have to it be the back layer only, when adding more components
+        backFrame.add(glCanvas); // will we need this for jogl to work better?
+        backFrame.setSize(width,height);
+        backFrame.setLayout(null);
+        backFrame.setOpaque(false);
+        ogFrame.add(backFrame);
 
         //Instance variables
         this.width = width;
         this.height = height;
     }
 
-    public void addBackground(String imgFilePath, int width, int height) {
+    public void addBackground(String imgFilePath) {
         //Creating the GLJPanel for OpenGL rendering support
         GLJPanel imgPanel = new GLJPanel(capabilities);
         imgPanel.addGLEventListener(this);
@@ -108,7 +111,15 @@ public class Scene implements GLEventListener{
     }
 
     @Override
-    public void init(GLAutoDrawable glAutoDrawable) {
+    public void init(GLAutoDrawable glAutoDrawable) { //How can we call this whenever we want?
+        //Rendering the background image (setting up step 3)
+//        ImageCreation backgroundCreation = new ImageCreation();
+        //Creating out gl object
+        GL2 gl = glAutoDrawable.getGL().getGL2();
+
+        // Enable 2D textures
+        gl.glEnable(GL2.GL_TEXTURE_2D);
+
 
     }
 
