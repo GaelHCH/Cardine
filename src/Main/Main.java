@@ -1,6 +1,6 @@
 package Main;
 
-import GameWindow.Scene;
+import Game_engine.Scene;
 
 public class Main {
 
