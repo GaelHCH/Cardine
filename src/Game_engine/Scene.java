@@ -1,17 +1,12 @@
-package GameWindow;
+package Game_engine;
 
 import Cards.Card;
-import UI.ImageCreation;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.awt.GLJPanel;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Scene implements GLEventListener{
     private final GLProfile profile;
