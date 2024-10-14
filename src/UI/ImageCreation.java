@@ -22,18 +22,14 @@ Step 4: Render a quad with applied texture (display method)
 
 public class ImageCreation {
     private String imgFilePath;
+    private BufferedImage image;
 
+    //Constructor creates image creation object and loads image
     public ImageCreation(String imgFilePath) {
-        this.imgFilePath = imgFilePath;
-    }
-
-    //Loading the image
-    public BufferedImage loadImage() {
         try {
-            return ImageIO.read(new File(imgFilePath));
+            image = ImageIO.read(new File(imgFilePath));
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -49,6 +45,13 @@ public class ImageCreation {
         return texture;
     }
 
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
 
 
 

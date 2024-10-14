@@ -1,43 +1,27 @@
 package Game_engine;
 
 import Cards.Card;
+import UI.ImageCreation;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.awt.GLJPanel;
+import com.jogamp.opengl.util.texture.Texture;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Scene implements GLEventListener{
-    private final GLProfile profile;
-    private final GLCapabilities capabilities;
-    public final JFrame ogFrame;
+    private GLProfile profile;
+    private GLCapabilities capabilities;
+    public JFrame ogFrame;
     public  JLayeredPane backFrame;
     private int width;
     private int height;
+    private Texture texture;
+
 
     //Default scene (*not updated from second constructor)
-    public Scene() {
-        //getting the capabilities object of GL2 profile
-        profile = GLProfile.get(GLProfile.GL2);
-        capabilities = new GLCapabilities(profile);
 
-        //creating frame
-        ogFrame = new JFrame (" Basic Frame");
-        ogFrame.setSize(400,400);
-        ogFrame.setVisible(true);
-        ogFrame.setResizable(true);
-
-        //Creating the JLayeredPane
-        backFrame = new JLayeredPane(); //We may still have to it be the back layer only, when adding more components
-        backFrame.setSize(400,400);
-        backFrame.setLayout(null);
-        backFrame.setOpaque(true);
-        ogFrame.add(backFrame);
-
-//        animator =  new Animator(window);
-//        animator.start();
-    }
 
     //Constructor to make a game scene (with title)
     public Scene(String title, int width, int height) {
@@ -66,12 +50,12 @@ public class Scene implements GLEventListener{
 //        ogFrame.setVisible(true);
 
         //Creating the JLayeredPane
-        backFrame = new JLayeredPane(); //We may still have to it be the back layer only, when adding more components
-        backFrame.add(glCanvas); // will we need this for jogl to work better?
-        backFrame.setSize(width,height);
-        backFrame.setLayout(null);
-        backFrame.setOpaque(false);
-        ogFrame.add(backFrame);
+//        backFrame = new JLayeredPane(); //We may still have to it be the back layer only, when adding more components
+//        backFrame.add(glCanvas); // will we need this for jogl to work better?
+//        backFrame.setSize(width,height);
+//        backFrame.setLayout(null);
+//        backFrame.setOpaque(false);
+//        ogFrame.add(backFrame);
 
         //Instance variables
         this.width = width;
@@ -115,7 +99,9 @@ public class Scene implements GLEventListener{
         // Enable 2D textures
         gl.glEnable(GL2.GL_TEXTURE_2D);
 
-
+        //Loading image and texture conversion
+        ImageCreation sceneBackground = new ImageCreation("res/back_copy.png");
+        texture = sceneBackground.loadTexture(gl, sceneBackground.getImage());
     }
 
     @Override
@@ -125,7 +111,33 @@ public class Scene implements GLEventListener{
 
     @Override
     public void display(GLAutoDrawable glAutoDrawable) {
+        GL2 gl = glAutoDrawable.getGL().getGL2();
 
+        gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+        gl.glLoadIdentity();
+
+        texture.bind(gl);
+
+        // Draw a quad with texture mapped to it
+        gl.glBegin(GL2.GL_QUADS);
+
+        // Bottom-left corner
+        gl.glTexCoord2f(0.0f, 0.0f); // Texture coordinate
+        gl.glVertex2f(-1.0f, -1.0f); // Vertex coordinate
+
+        // Bottom-right corner
+        gl.glTexCoord2f(1.0f, 0.0f); // Texture coordinate
+        gl.glVertex2f(1.0f, -1.0f);  // Vertex coordinate
+
+        // Top-right corner
+        gl.glTexCoord2f(1.0f, 1.0f); // Texture coordinate
+        gl.glVertex2f(1.0f, 1.0f);   // Vertex coordinate
+
+        // Top-left corner
+        gl.glTexCoord2f(0.0f, 1.0f); // Texture coordinate
+        gl.glVertex2f(-1.0f, 1.0f);  // Vertex coordinate
+
+        gl.glEnd();
     }
 
     @Override
