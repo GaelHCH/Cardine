@@ -1,6 +1,6 @@
 package Cards;
 
-import GameWindow.Scene;
+import Game_engine.Screen;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
@@ -17,7 +17,7 @@ public class Card implements GLEventListener {
         * A draggable card (however not enabled by default)
      */
     private JLayeredPane card;
-    private Scene scene;
+    private Screen scene;
 
 
     public Card() {
