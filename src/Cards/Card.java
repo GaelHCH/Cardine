@@ -1,6 +1,6 @@
 package Cards;
 
-import GameWindow.Scene;
+import Game_engine.Scene;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
